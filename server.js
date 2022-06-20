@@ -1,12 +1,13 @@
+require('dotenv').config();
 const express = require('express');
+
 const app = express();
+const ROOT_DIR = process.env.ROOT_DIR;
+const PORT = process.env.PORT;
 
-ROOT_DIR = "./html/";
-
-app.listen(3000);
+app.listen(PORT);
 
 //Main Page
 app.get("/",(req,res) => {
-    console.log('It works');
     res.sendFile(ROOT_DIR + 'index.html', { root : __dirname});
 });
