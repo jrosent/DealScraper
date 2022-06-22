@@ -1,5 +1,6 @@
 #Node
 /node_modules
 
-#Environment Variables
+#Secrets
 .env
+/Creds
