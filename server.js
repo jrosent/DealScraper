@@ -14,7 +14,7 @@ const express = require('express');
 //Run Express application
 const app = express();
 
-//Assign environment variableshj
+//Assign environment variables
 const ROOT_DIR = process.env.ROOT_DIR;
 const PORT = process.env.PORT;
 const KEY = process.env.KEY_LOC;
@@ -30,3 +30,26 @@ https.createServer({
 app.get("/",(req,res) => {
     res.sendFile(ROOT_DIR + 'index.html', { root : __dirname});
 });
+
+app.get("/scrape.js",(req,res) => {
+    res.contentType("text/javascript");
+    res.sendFile('scrape.js',{root:__dirname});
+})
+
+app.get("/scrapeDeals", async (req,res) => {
+    const title = await scrapeDeals();
+    //console.log("App.get:" + title);
+    res.send(title);
+})
+
+async function scrapeDeals(){
+    const URL = process.env.NE;
+
+    const htmlData = await axios(URL);
+    const body = htmlData.data;
+    let $ = cheerio.load(body);
+
+    let title = $(process.env.NE_LOGO).text();
+    //console.log("ScrapeNE: " + title);
+    return title;
+}
