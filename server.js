@@ -48,8 +48,14 @@ async function scrapeDeals(){
     const htmlData = await axios(URL);
     const body = htmlData.data;
     let $ = cheerio.load(body);
+    let deals = [];
+        
+    $(process.env.NE_CELL).each((_,e)=>{
+        let f = $(e).find(process.env.NE_TITLE).text();
+        deals.push(f);
+    });
+  
+    let jsonObj = {deals};
+    return jsonObj;
 
-    let title = $(process.env.NE_LOGO).text();
-    //console.log("ScrapeNE: " + title);
-    return title;
 }
