@@ -7,12 +7,12 @@ async function tester(){
     const deals = title.deals;
 
     deals.forEach(element => {
-        let d = document.createElement('p');
-        d.innerHTML = element;
-        document.body.appendChild(d);
+        let div = document.createElement('div');
+        div.id = 'deal';
+        let d = document.createElement('a');
+        d.innerHTML = element.title;
+        d.href = element.link;
+        div.appendChild(d);
+        document.body.appendChild(div);
     });
-    
-    //msg.innerHTML = title;
-    //document.body.appendChild(msg);
-    //console.log("Tester: " + title);
 }

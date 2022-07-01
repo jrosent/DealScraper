@@ -10,6 +10,7 @@ const fs = require('fs');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const express = require('express');
+const { title } = require('process');
 
 //Run Express application
 const app = express();
@@ -51,11 +52,11 @@ async function scrapeDeals(){
     let deals = [];
         
     $(process.env.NE_CELL).each((_,e)=>{
-        let f = $(e).find(process.env.NE_TITLE).text();
-        deals.push(f);
+        let title = $(e).find(process.env.NE_TITLE).text();
+        let link = $(e).find(process.env.NE_TITLE).attr('href');
+        deals.push({'title':title, 'link':link});
     });
   
     let jsonObj = {deals};
     return jsonObj;
-
 }
