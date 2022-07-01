@@ -52,9 +52,10 @@ async function scrapeDeals(){
     let deals = [];
         
     $(process.env.NE_CELL).each((_,e)=>{
+        let img = $(e).find(process.env.NE_IMG).find('img').attr('src');
         let title = $(e).find(process.env.NE_TITLE).text();
         let link = $(e).find(process.env.NE_TITLE).attr('href');
-        deals.push({'title':title, 'link':link});
+        deals.push({'img':img, 'title':title, 'link':link});
     });
   
     let jsonObj = {deals};
