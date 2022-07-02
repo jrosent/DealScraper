@@ -5,6 +5,7 @@ require('dotenv').config();
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
+const url = require('url');
 
 //Installed modules
 const axios = require('axios');
@@ -38,12 +39,13 @@ app.get("/scrape.js",(req,res) => {
 })
 
 app.get("/scrapeDeals", async (req,res) => {
-    const title = await scrapeDeals();
+    console.log(req.query.searchText);
+    const title = await scrapeDeals(req.query.searchText);
     //console.log("App.get:" + title);
     res.send(title);
 })
 
-async function scrapeDeals(){
+async function scrapeDeals(searchText){
     const URL = process.env.NE;
 
     const htmlData = await axios(URL);
@@ -52,10 +54,12 @@ async function scrapeDeals(){
     let deals = [];
         
     $(process.env.NE_CELL).each((_,e)=>{
-        let img = $(e).find(process.env.NE_IMG).find('img').attr('src');
         let title = $(e).find(process.env.NE_TITLE).text();
-        let link = $(e).find(process.env.NE_TITLE).attr('href');
-        deals.push({'img':img, 'title':title, 'link':link});
+        if(title.toLowerCase().includes(searchText.toLowerCase())){
+            let img = $(e).find(process.env.NE_IMG).find('img').attr('src');
+            let link = $(e).find(process.env.NE_TITLE).attr('href');
+            deals.push({'img':img, 'title':title, 'link':link});
+        }
     });
   
     let jsonObj = {deals};
