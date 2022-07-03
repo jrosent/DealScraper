@@ -11,7 +11,6 @@ const url = require('url');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const express = require('express');
-const { title } = require('process');
 
 //Run Express application
 const app = express();
@@ -39,7 +38,7 @@ app.get("/scrape.js",(req,res) => {
 })
 
 app.get("/scrapeDeals", async (req,res) => {
-    console.log(req.query.searchText);
+    //console.log(req.query.searchText);
     const title = await scrapeDeals(req.query.searchText);
     //console.log("App.get:" + title);
     res.send(title);
@@ -55,7 +54,7 @@ async function scrapeDeals(searchText){
         
     $(process.env.NE_CELL).each((_,e)=>{
         let title = $(e).find(process.env.NE_TITLE).text();
-        if(title.toLowerCase().includes(searchText.toLowerCase())){
+        if(title.toLowerCase().includes(searchText.toLowerCase()) || title === ''){
             let img = $(e).find(process.env.NE_IMG).find('img').attr('src');
             let link = $(e).find(process.env.NE_TITLE).attr('href');
             deals.push({'img':img, 'title':title, 'link':link});

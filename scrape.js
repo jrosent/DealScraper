@@ -8,6 +8,7 @@ async function tester(){
     const title = await response.json();
     const deals = title.deals;
     const root = document.getElementById('root');
+    root.innerHTML = '';
 
     if(deals.length <= 0){
         root.innerHTML = "NO RESULTS FOUND FOR '" + search + "'";
