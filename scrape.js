@@ -1,7 +1,7 @@
 
 async function tester(){
     //let msg = document.createElement('p');
-    let url = document.URL;
+    let url = document.location.origin;
     let search = document.getElementById('searchText').value;
     let endpoint = new URL(url + 'scrapeDeals');
     endpoint.searchParams.set('searchText',search);
