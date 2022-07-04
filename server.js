@@ -11,7 +11,7 @@ const url = require('url');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const express = require('express');
-const cors = require('cors');
+
 
 //Run Express application
 const app = express();
@@ -21,12 +21,6 @@ const ROOT_DIR = process.env.ROOT_DIR;
 const PORT = process.env.PORT;
 const KEY = process.env.KEY_LOC;
 const CERT = process.env.CERT_LOC;
-
-app.use(
-    cors({
-        origin: "*",
-    })
-)
 
 http.createServer(app)
 .listen(PORT, () => console.log("Listening on port: " + PORT));
