@@ -40,6 +40,7 @@ app.get("/scrapeDeals", async (req,res) => {
     //console.log(req.query.searchText);
     const title = await scrapeDeals(req.query.searchText);
     //console.log("App.get:" + title);
+    res.header("Access-Control-Allow-Origin","*");
     res.send(title);
 
 })
