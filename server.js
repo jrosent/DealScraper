@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 //Node modules
-const https = require('https');
+const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
@@ -11,6 +11,7 @@ const url = require('url');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const express = require('express');
+const cors = require('cors');
 
 //Run Express application
 const app = express();
@@ -21,10 +22,13 @@ const PORT = process.env.PORT;
 const KEY = process.env.KEY_LOC;
 const CERT = process.env.CERT_LOC;
 
-https.createServer({
-    key: fs.readFileSync(path.join(__dirname, KEY)),
-    cert: fs.readFileSync(path.join(__dirname,CERT))
-},app)
+app.use(
+    cors({
+        origin: "*",
+    })
+)
+
+http.createServer(app)
 .listen(PORT, () => console.log("Listening on port: " + PORT));
 
 //Main Page
@@ -38,10 +42,12 @@ app.get("/scrape.js",(req,res) => {
 })
 
 app.get("/scrapeDeals", async (req,res) => {
+
     //console.log(req.query.searchText);
     const title = await scrapeDeals(req.query.searchText);
     //console.log("App.get:" + title);
     res.send(title);
+
 })
 
 async function scrapeDeals(searchText){
