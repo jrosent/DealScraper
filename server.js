@@ -37,9 +37,7 @@ app.get("/scrape.js",(req,res) => {
 
 app.get("/scrapeDeals", async (req,res) => {
 
-    //console.log(req.query.searchText);
     const title = await scrapeDeals(req.query.searchText);
-    //console.log("App.get:" + title);
     res.header("Access-Control-Allow-Origin","*");
     res.send(title);
 
@@ -52,13 +50,15 @@ async function scrapeDeals(searchText){
     const body = htmlData.data;
     let $ = cheerio.load(body);
     let deals = [];
+    let i = 0;
         
     $(process.env.NE_CELL).each((_,e)=>{
         let title = $(e).find(process.env.NE_TITLE).text();
         if(title.toLowerCase().includes(searchText.toLowerCase()) || title === ''){
             let img = $(e).find(process.env.NE_IMG).find('img').attr('src');
             let link = $(e).find(process.env.NE_TITLE).attr('href');
-            deals.push({'img':img, 'title':title, 'link':link});
+            let price = $(e).find(process.env.NE_PRICE).text();
+            deals.push({'img':img, 'title':title, 'link':link, 'price':price});
         }
     });
   
