@@ -13,7 +13,6 @@ const cheerio = require('cheerio');
 const express = require('express');
 const puppeteer = require('puppeteer');
 
-
 //Run Express application
 const app = express();
 
@@ -35,11 +34,9 @@ app.get("/scrape.js",(req,res) => {
 })
 
 app.get("/scrapeDeals", async (req,res) => {
-
     const title = await puppetScrape(req.query.searchText);
     res.header("Access-Control-Allow-Origin","*");
     res.send(title);
-
 })
 
 //Scrapes static html from given url
