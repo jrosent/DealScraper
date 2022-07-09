@@ -6,7 +6,7 @@ async function tester(){
     endpoint.searchParams.set('searchText',search);
 
     //Fetch data from server and process json
-    const response = await fetch(endpoint, {});
+    const response = await fetch(endpoint);
     const title = await response.json();
     const deals = title.deals;
     
