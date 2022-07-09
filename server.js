@@ -30,7 +30,7 @@ app.get("/",(req,res) => {
 
 app.get("/scrape.js",(req,res) => {
     res.contentType("text/javascript");
-    res.sendFile('scrape.js',{root:__dirname});
+    res.sendFile('client.js',{root:__dirname});
 })
 
 app.get("/scrapeDeals", async (req,res) => {
