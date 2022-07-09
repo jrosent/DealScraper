@@ -3,15 +3,10 @@ import "dotenv/config.js";
 
 //Node modules
 import * as http from "http";
-import * as path from "path";
-import * as fs from "fs";
 import * as url from "url";
 
 //Installed modules
-import axios from "axios";
-import cheerio from "cheerio";
 import express, { json } from "express";
-import puppeteer from "puppeteer";
 import {scrapeToFile,filterBySearch} from "./Scrape/scLogic.js"
 
 //Run Express application
