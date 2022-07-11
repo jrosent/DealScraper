@@ -26,23 +26,28 @@ async function scrapeDeals(searchText){
 
 //Scrape website for deal items using puppeteer to load scripts
 async function filterBySearch(searchText,res) {
-    fs.readFile("./neScrapeData.json",'utf8', (err, data)=>{
-        if(err){
-            return;
-        }
-        else{
-            const resp = {'deals':[]};
-            const jsonObj = JSON.parse(data);
-            jsonObj.deals.forEach((element)=>{
-                if (element.title.toLowerCase().includes(searchText.toLowerCase()) 
-                || element.title === ''){
-                    resp.deals.push(element);
-                };
-            });
-            res.header("Access-Control-Allow-Origin","*");
-            res.send(resp);
-        };
-    });
+    
+    ()=>{   
+        const resp = {'deals':[]};
+        fs.readFile("./neScrapeData.json",'utf8', (err, data)=>{
+            
+            if(err){
+                return;
+            }
+            else{
+                const jsonObj = JSON.parse(data);
+                jsonObj.deals.forEach((element)=>{
+                    if (element.title.toLowerCase().includes(searchText.toLowerCase()) 
+                    || element.title === ''){
+                        resp.deals.push(element);
+                    };
+                });
+                res.header("Access-Control-Allow-Origin","*");
+                res.send(resp);
+            };
+        })
+    }
+    
 };
 
 //Reads from browser and writes information to json file
